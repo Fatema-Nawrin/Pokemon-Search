@@ -11,10 +11,12 @@ const SearchBox = () => {
     const searchPokemon = (pokemonName) => {
         setLoading(true)
         setErrorMessage('')
+        setPokemon('')
 
         if (pokemonName === '') {
             setErrorMessage('Please, Enter a pokemon name.')
             setLoading(false)
+            setPokemon('')
         }
 
         else {
