@@ -3,7 +3,7 @@ import SearchBox from './SearchBox';
 
 const Home = () => {
     return (
-        <div>
+        <div className='bg-blue-100 min-h-screen'>
             <SearchBox></SearchBox>
         </div>
     );
