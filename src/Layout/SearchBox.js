@@ -6,19 +6,27 @@ const SearchBox = () => {
     const [pokemonName, setPokemonName] = useState('')
     const [pokemon, setPokemon] = useState()
     const [errorMessage, setErrorMessage] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const searchPokemon = (pokemonName) => {
+        setLoading(true)
+        setErrorMessage('')
+
         if (pokemonName === '') {
             setErrorMessage('Please, Enter a pokemon name.')
+            setLoading(false)
         }
+
         else {
             axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`).then(function (response) {
                 setPokemon(response.data)
                 setErrorMessage('')
+                setLoading(false)
 
             }).catch(function (error) {
                 setErrorMessage('Pokemon is not found.');
                 setPokemon('')
+                setLoading(false)
             })
         }
 
@@ -35,7 +43,22 @@ const SearchBox = () => {
                     Search
                 </button>
             </div>
-            {errorMessage.length !== 0 ? <><p className='py-6 text-red-600'>{errorMessage}</p></> : null}
+
+            {errorMessage.length !== 0 ?
+                <><p className='py-6 text-red-600'>{errorMessage}</p></>
+                :
+                null
+            }
+
+            {loading ?
+                <div className="flex justify-center py-12">
+                    <span class="animate-ping absolute inline-flex h-5 w-5 rounded-full bg-sky-500 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-5 w-5 bg-sky-600"></span>
+                </div>
+                :
+                null
+            }
+
             {pokemon ?
                 <Card pokemon={pokemon}></Card>
                 :
